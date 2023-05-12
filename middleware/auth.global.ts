@@ -1,3 +1,5 @@
+import type { RouteLocationRaw } from 'vue-router'
+
 export default defineNuxtRouteMiddleware(async (to, from) => {
 
   // Config
@@ -15,6 +17,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   
   // MIDDLEWARE: AUTH RBAC
   const rbac: String | true = await useAuthRbac(to)
-  if(rbac !== true ) return navigateTo(rbac)
+  if(rbac !== true ) return navigateTo(rbac as RouteLocationRaw)
 
 })

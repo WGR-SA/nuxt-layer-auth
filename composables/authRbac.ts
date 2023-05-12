@@ -1,6 +1,7 @@
 import {minimatch} from 'minimatch'
+import type { RouteLocationNormalized } from 'vue-router'
 
-export const useAuthRbac = async (to): Promise<String | true> => {
+export const useAuthRbac = async (to: RouteLocationNormalized): Promise<String | true> => {
   
   // Config
   const config = useRuntimeConfig()
@@ -42,7 +43,9 @@ export const useAuthRbac = async (to): Promise<String | true> => {
           return auth.endpoints.signIn.path
         }
         const key = auth.endpoints.getSession.identityKey
-        const id = key? data.value[key]: data.value
+
+        // @ts-ignore
+        const id = key? (Object.hasOwn(data.value, key)): data.value
         
         rawIdentity = JSON.stringify(id)
         set('identity', rawIdentity)
