@@ -1,8 +1,5 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
-  modules: [
-    '@wgr-sa/nuxt-form'
-  ],
   runtimeConfig: {
     app: { },
     public: {
@@ -37,5 +34,5 @@ export default defineNuxtConfig({
         rbac: []
       }
     },
-  },
+  }
 })
