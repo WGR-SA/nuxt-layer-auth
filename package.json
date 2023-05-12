@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-layer-auth-api",
+  "name": "@wgr-sa/nuxt-layer-auth",
   "type": "module",
   "version": "0.0.1",
   "main": "./nuxt.config.ts",

@@ -18,15 +18,18 @@ export default defineNuxtConfig({
         loginRedirects: '/admin',
         logoutRedirects: '/',
         endpoints: {
-          signIn: { path: '/auth/login', method: 'post', url: '/users/who-am-i' },
+          signIn: { path: '/auth/login', method: 'post', url: '/users/who-am-i', identityKey: 'data', tokenKey: 'token' },
           signOut: { path: '/auth/logout', method: 'post', url: '/users/who-am-i' },
           signUp: { path: '/auth/register', method: 'post', url: '/users/who-am-i' },
-          getSession: { path: '/auth/session', method: 'get', url: '/users/who-am-i' },
+          getSession: { path: '/auth/session', method: 'get', url: '/users/who-am-i', identityKey: 'data' },
         },
         token: {
           useLocaleStorage: true,
           fallbackToApiToken: true,
-          acceptUrlQueryToken: true,
+          urlQueryToken: {
+            active: true,
+            param: 'token'
+          }
         },
         identity: {
           useLocaleStorage: false

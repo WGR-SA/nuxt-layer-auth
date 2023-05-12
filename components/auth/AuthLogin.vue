@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { watchEffect } from 'vue'
 const auth = useRuntimeConfig().public.auth
-const { post } = useApi()
 
 console.log(useRuntimeConfig())
 
@@ -20,11 +19,17 @@ if(error.value) return;
 
 const {set} = useAuthStorage()
 const {loginRedirect} = useAuthRedirect()
-const identity = data.value.data
-const token = data.value.token
 
-set('token', token)
+// id
+const iKey = auth.endpoints.signIn.identityKey
+const identity = iKey? data.value[iKey]: data.value
 set('identity', JSON.stringify(identity))
+
+// tk
+const tKey = auth.endpoints.signIn.tokenKey
+const token = tKey? data.value[tKey]: data.value
+set('token', token)
+
 navigateTo(loginRedirect(identity.role))
 }
 })
