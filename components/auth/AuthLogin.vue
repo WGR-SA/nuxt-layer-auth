@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { watchEffect } from 'vue'
 const auth = useRuntimeConfig().public.auth
+const { formReady } = useFormBuilder()
 
 console.log(useRuntimeConfig())
 
@@ -11,29 +12,31 @@ const formMessage = { submit: 'Connexion', alert: {
 const login = ref()
 
 // LOGIN PROCESS
-watchEffect(async () => {
-  if(login.value?.ready()) {  
+const submit = async () => {
 
-const {data, error} = await login.value.actions.submit()
-if(error.value) return;
+  await formReady(login.value)
+  if(!login.value?.ready()) return
 
-const {set} = useAuthStorage()
-const {loginRedirect} = useAuthRedirect()
+  console.log('DADA')
+  const {data, error} = await login.value.actions.submit()
+  if(error.value) return;
 
-// id
-const iKey = auth.endpoints.signIn.identityKey
-const identity = iKey? data.value[iKey]: data.value
-set('identity', JSON.stringify(identity))
+  const {set} = useAuthStorage()
+  const {loginRedirect} = useAuthRedirect()
 
-// tk
-const tKey = auth.endpoints.signIn.tokenKey
-const token = tKey? data.value[tKey]: data.value
-set('token', token)
+  // id
+  const iKey = auth.endpoints.signIn.identityKey
+  const identity = iKey? data.value[iKey]: data.value
+  set('identity', JSON.stringify(identity))
 
-navigateTo(loginRedirect(identity.role))
+  // tk
+  const tKey = auth.endpoints.signIn.tokenKey
+  const token = tKey? data.value[tKey]: data.value
+  set('token', token)
+
+  navigateTo(loginRedirect(identity.role))
+  
 }
-})
-
 </script>
 <template>
   <FormBuilder
@@ -52,8 +55,8 @@ navigateTo(loginRedirect(identity.role))
       :rules="['isNotEmpty']"
       type="password"
     />
-    <FormSubmit>
+    <button @click.prevent="submit()">
       Login
-    </FormSubmit>
+    </button>
   </FormBuilder>
 </template>

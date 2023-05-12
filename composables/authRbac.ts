@@ -32,7 +32,8 @@ export const useAuthRbac = async (to: RouteLocationNormalized): Promise<String |
 
       // KO - if no identity
       let rawIdentity = get('identity')
-      if(rawIdentity == null) 
+      
+      if(rawIdentity === undefined || rawIdentity === null || rawIdentity === '') 
       {
         const { query } = useApi()
         const { data, error } = await query(auth.endpoints.getSession.url, {method: auth.endpoints.getSession.method})
@@ -45,12 +46,12 @@ export const useAuthRbac = async (to: RouteLocationNormalized): Promise<String |
         const key = auth.endpoints.getSession.identityKey
 
         // @ts-ignore
-        const id = key? (Object.hasOwn(data.value, key)): data.value
+        const id = key? data.value[key]: data.value
         
         rawIdentity = JSON.stringify(id)
         set('identity', rawIdentity)
       }
-
+      
       const identity = JSON.parse(rawIdentity)
 
       // KO - if identity but no role
@@ -70,6 +71,6 @@ export const useAuthRbac = async (to: RouteLocationNormalized): Promise<String |
       throw createError({ statusCode: 401, statusMessage: 'Unauthorized' })
     }
   }
-
+  console.log('no match found for:', to.path);
   return rbac.length  === 0? true : auth.endpoints.signIn.path
 }
