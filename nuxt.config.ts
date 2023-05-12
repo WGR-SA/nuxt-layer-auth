@@ -19,9 +19,9 @@ export default defineNuxtConfig({
         logoutRedirects: '/',
         endpoints: {
           signIn: { path: '/auth/login', method: 'post', url: '/users/who-am-i', identityKey: 'data', tokenKey: 'token' },
-          signOut: { path: '/auth/logout', method: 'post', url: '/users/who-am-i' },
+          signOut: { method: 'post', url: false },
           signUp: { path: '/auth/register', method: 'post', url: '/users/who-am-i' },
-          getSession: { path: '/auth/session', method: 'get', url: '/users/who-am-i', identityKey: 'data' },
+          getSession: { method: 'get', url: '/users/who-am-i', identityKey: 'data' },
         },
         token: {
           useLocaleStorage: true,
@@ -33,7 +33,8 @@ export default defineNuxtConfig({
         },
         identity: {
           useLocaleStorage: false
-        }
+        },
+        rbac: []
       }
     },
   },

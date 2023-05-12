@@ -16,7 +16,7 @@ export const useAuthStorage = () => {
 
   const set = (key: string, value: string) => {
     if(useLocale(key)) localStorage.setItem(getKey(key), value)
-    else useState(getKey(key)).value = value;
+    else useState(getKey(key)).value = value
   }
 
   const get = (key: string) => {
@@ -28,6 +28,11 @@ export const useAuthStorage = () => {
 
     return value;
   }
+
+  const del = (key: string) => {
+    if(useLocale(key)) localStorage.removeItem(getKey(key))
+    else useState(getKey(key)).value = null
+  }
   
-  return { set, get }
+  return { set, get, del }
 }

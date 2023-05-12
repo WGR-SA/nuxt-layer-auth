@@ -6,15 +6,15 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   // MIDDLEWARE: ACCEPT URL TOKEN FROM QUERY
   if(auth.token.urlQueryToken.active)
   {
-    if(to.query[auth.token.urlQueryToken.param])
+    if(from.query[auth.token.urlQueryToken.param])
     {
       const {set} = useAuthStorage();
-      set('token', to.query.token as string)
+      set('token', from.query.token as string)
     }
   }
   
   // MIDDLEWARE: AUTH RBAC
-  const rbac: string | true = await useAuthRbac(to)
+  const rbac: String | true = await useAuthRbac(to)
   if(rbac !== true ) return navigateTo(rbac)
 
 })

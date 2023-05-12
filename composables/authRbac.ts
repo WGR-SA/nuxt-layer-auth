@@ -68,5 +68,5 @@ export const useAuthRbac = async (to): Promise<String | true> => {
     }
   }
 
-  return true
+  return rbac.length  === 0? true : auth.endpoints.signIn.path
 }

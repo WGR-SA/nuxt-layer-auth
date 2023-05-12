@@ -32,5 +32,5 @@ export const useApi = () => {
   const put = async (url: string, opt: Record<string, any> | null) => await query(url, Object.assign({method: 'put'}, opt || {}))
   const del = async (url: string, opt: Record<string, any> | null) => await query(url, Object.assign({method: 'delete'}, opt || {}))
 
-  return { apiUrl: config.public.apiUrl, token: storage.get('token'), query, get, post, put, del }
+  return { query, get, post, put, del }
 }
