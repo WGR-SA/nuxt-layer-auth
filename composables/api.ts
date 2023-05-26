@@ -27,10 +27,10 @@ export const useApi = () => {
     return await useFetch<DataT>(url, options)
   }
 
-  const get = async (url: string, opt: Record<string, any> | null) => await query(url, Object.assign({method: 'get'}, opt || {}))
-  const post = async (url: string, opt: Record<string, any> | null) => await query(url, Object.assign({method: 'post'}, opt || {}))
-  const put = async (url: string, opt: Record<string, any> | null) => await query(url, Object.assign({method: 'put'}, opt || {}))
-  const del = async (url: string, opt: Record<string, any> | null) => await query(url, Object.assign({method: 'delete'}, opt || {}))
+  const get = async <DataT>(url: string, opt: Record<string, any> | null) => await <DataT>query(url, Object.assign({method: 'get'}, opt || {}))
+  const post = async <DataT>(url: string, opt: Record<string, any> | null) => await <DataT>query(url, Object.assign({method: 'post'}, opt || {}))
+  const put = async <DataT>(url: string, opt: Record<string, any> | null) => await <DataT>query(url, Object.assign({method: 'put'}, opt || {}))
+  const del = async <DataT>(url: string, opt: Record<string, any> | null) => await <DataT>query(url, Object.assign({method: 'delete'}, opt || {}))
 
   return { query, get, post, put, del }
 }
