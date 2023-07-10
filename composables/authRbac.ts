@@ -7,11 +7,16 @@ export const useAuthRbac = async (to: RouteLocationNormalized): Promise<String |
   const config = useRuntimeConfig()
   const auth = config.public.auth
   const rbac = auth.rbac
-
+  let path = to.path
+  auth.prefixes.forEach(prefix => {
+    path = path.replace(prefix, '')
+  });
+  
+  // look for matching rule
   for(let i = 0; i < rbac.length; i++)
   {
     const rule = rbac[i]
-    if(minimatch(to.path, rule.path, rule.options?? 8))
+    if(minimatch(path, rule.path, rule.options?? 8))
     {
       // log
       console.log('match found!', rule.path)

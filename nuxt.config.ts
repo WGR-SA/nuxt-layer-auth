@@ -12,6 +12,7 @@ export default defineNuxtConfig({
         initialCache: true
       },
       auth: {
+        prefixes: [],
         loginRedirects: '/admin',
         logoutRedirects: '/',
         endpoints: {
