@@ -16,7 +16,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   }
   
   // MIDDLEWARE: AUTH RBAC
-  const rbac: String | true = await useAuthRbac(to)
-  if(rbac !== true ) return navigateTo(rbac as RouteLocationRaw)
-
+  const rbac: RouteLocationRaw | Function| true = await useAuthRbac(to)
+  if(rbac !== true && typeof rbac === 'function') return navigateTo(rbac() as RouteLocationRaw)
+  
+  return navigateTo(rbac as RouteLocationRaw)
 })

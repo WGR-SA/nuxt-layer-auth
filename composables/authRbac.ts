@@ -1,7 +1,7 @@
 import {minimatch} from 'minimatch'
-import type { RouteLocationNormalized } from 'vue-router'
+import type { RouteLocationRaw, RouteLocationNormalized } from 'vue-router'
 
-export const useAuthRbac = async (to: RouteLocationNormalized): Promise<String | true> => {
+export const useAuthRbac = async (to: RouteLocationNormalized): Promise<RouteLocationRaw | Function | true> => {
   
   // Config
   const config = useRuntimeConfig()
