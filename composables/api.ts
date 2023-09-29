@@ -2,6 +2,7 @@ const maxRetry:number = 3
 
 export interface CakeResponse<T> {
   data: T | T[] | null;
+  pagination?: Record<string, any>;
   success: boolean;
   message?: string;
 }
@@ -60,7 +61,7 @@ export const useApi = () => {
     if(error.value) return {data: null, error: error.value} as ApiResult<T>;
     const cakeResponse = data.value as CakeResponse<T>;
     if(!cakeResponse.success) return {data: null, error: new Error(cakeResponse.message)} as ApiResult<T>;
-    return {data: cakeResponse.data, error: null, loading: false} as ApiResult<T>;
+    return {data: cakeResponse.data, pagination: cakeResponse.pagination, error: null, loading: false} as ApiResult<T>;
   }
 
   /*

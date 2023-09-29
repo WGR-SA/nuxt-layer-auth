@@ -15,6 +15,7 @@ export class AuthFormActions implements FormActions {
     const { data, error } = await query(auth.endpoints.signIn.url, {
       method: auth.endpoints.signIn.method,
       body: this.form.data.state,
+      watch: false,
       onResponseError: () => {
         this.form.mutateState('error', 'unknown')
       },
