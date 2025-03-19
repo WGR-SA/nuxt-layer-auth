@@ -48,6 +48,8 @@ export const useApi = () => {
 
   // methods
   const query = async <DataT>(url: string, opt: Record<string, any>) => {
+    apiConfig.headers['Authorization'] = 'Bearer ' + storage.get('token');
+
     const options = Object.assign(apiConfig, {key: url},opt)
     
     return await useFetch<DataT>(url, options)
